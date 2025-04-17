@@ -1,21 +1,43 @@
 class Solution {
 public:
-    vector<int> findDisappearedNumbers(vector<int>& nums) {
-        int n=nums.size();
-        vector<int>freq(n+1,0);
-        for(int i=0;i<n;i++)
+        bool binarysearch(vector<int>& nums,int start,int end,int target)
         {
-            freq[nums[i]]++;    
+            while(start<=end)
+            {
+            int mid=(start+end)/2;
+            if(nums[mid]==target)
+            {
+                return true;
+            }
+            else if(nums[mid]<target)
+            {
+                start=mid+1;
+            }
+            else
+            {
+                end=mid-1;
+            }
+            }
+            return false;
+            
+
         }
-        vector<int>result;
+
+    vector<int> findDisappearedNumbers(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
+        vector<int>ans;
+
+        int n=nums.size();
         for(int i=1;i<=n;i++)
         {
-            if(freq[i]==0)
-            {
-                result.push_back(i);
-            }
-        }  
-        return result;   
+           if(!binarysearch(nums,0,n-1,i))
+           {
+                  ans.push_back(i);
+           }
+
+        }
+        return ans;
+         
+        
     }
-    
 };
